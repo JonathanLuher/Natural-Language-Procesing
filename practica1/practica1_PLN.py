@@ -22,21 +22,32 @@ def extraer_nombres(expresion, contenido):
 
 #Funcion que busca la lista de autores y editores
 def extraer_autores(contenido):
-    return extraer_nombres(r'author\s*=\s*[{"]([\s\S]*?)[}"]', contenido)
+    return extraer_nombres(r'author\s*=\s*[{]([\s\S]*?)[}]', contenido)
 
 def extraer_editores(contenido):
-    return extraer_nombres(r'editor\s*=\s*[{"]([\s\S]*?)[}"]', contenido)
+    return extraer_nombres(r'editor\s*=\s*[{]([\s\S]*?)\s*}(?=,|\n)', contenido)
 
 #Extraer contenido del titulo
 def extraer_titulo(contenido):
-    bibtex_titles = re.findall(r'(?<!book)title\s*=\s*[{"]([\s\S]*?)[}"]', contenido, re.IGNORECASE)
+    bibtex_titles = re.findall(r'(?<!book)title\s*=\s*\{(\s\S*?)\}', contenido, re.IGNORECASE)
     titles = [re.sub(r'\n+', ' ', title).strip().replace('\xa0', ' ') for title in bibtex_titles]
     return titles
 
 def extrer_booktitle(contenido):
-    bibtex_booktitle = re.findall(r'booktitle\s*=\s*[{]([\s\S]*?)[}]',contenido)
+    bibtex_booktitle = re.findall(r'booktitle\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
     return bibtex_booktitle
 
+def extraer_año(contenido):
+    bibtex_año = re.findall(r'year\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
+    return bibtex_año
+
+def extraer_publisher(contenido):
+    bibtex_publisher = re.findall(r'publisher\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
+    return bibtex_publisher
+
+def extraer_direccion(contenido):
+    bibtex_publisher = re.findall(r'address\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
+    return bibtex_publisher
 
 #Función para leer el documento
 def open_file():
@@ -52,11 +63,18 @@ def open_file():
             authors = extraer_autores(contenido)
             editors = extraer_editores(contenido)
             booktitle = extrer_booktitle(contenido)
+            year = extraer_año(contenido)
+            publisher = extraer_publisher(contenido)
+            direccion = extraer_direccion(contenido)
             
+
             print("Titulo del articulo:", title)
             print("Lista de autores:", authors)
             print("Lista de editores:", editors)
             print("El titulo del libro es: ",booktitle)
+            print("Año de publicacion: ",year)
+            print("Publisher: ", publisher)
+            print("Direccion: ",direccion)
             
 
 if __name__ == "__main__":
