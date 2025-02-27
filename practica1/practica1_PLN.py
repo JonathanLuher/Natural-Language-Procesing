@@ -20,7 +20,7 @@ def extraer_nombres(expresion, contenido):
     resultados = re.findall(expresion, contenido, re.IGNORECASE)
     return [procesar_nombres(resultado) for resultado in resultados]
 
-#Funcion que busca la lista de autores
+#Funcion que busca la lista de autores y editores
 def extraer_autores(contenido):
     return extraer_nombres(r'author\s*=\s*[{"]([\s\S]*?)[}"]', contenido)
 
@@ -33,9 +33,12 @@ def extraer_titulo(contenido):
     titles = [re.sub(r'\n+', ' ', title).strip().replace('\xa0', ' ') for title in bibtex_titles]
     return titles
 
+def extrer_booktitle(contenido):
+    bibtex_booktitle = re.findall(r'booktitle\s*=\s*[{]([\s\S]*?)[}]',contenido)
+    return bibtex_booktitle
+
 
 #Función para leer el documento
-
 def open_file():
     root = tk.Tk()
     root.withdraw()
@@ -48,10 +51,12 @@ def open_file():
             title = extraer_titulo(contenido)
             authors = extraer_autores(contenido)
             editors = extraer_editores(contenido)
+            booktitle = extrer_booktitle(contenido)
             
             print("Titulo del articulo:", title)
             print("Lista de autores:", authors)
             print("Lista de editores:", editors)
+            print("El titulo del libro es: ",booktitle)
             
 
 if __name__ == "__main__":
