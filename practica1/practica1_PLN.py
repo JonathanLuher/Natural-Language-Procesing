@@ -21,6 +21,11 @@ def extraer_autores(contenido):
     return formatted_authors
 
 
+def extraer_titulo(contenido):
+    bibtex_titles = re.findall(r'(?<!book)title\s*=\s*[{"]([\s\S]*?)[}"]', contenido, re.IGNORECASE)
+    titles = [re.sub(r'\n+', ' ', title).strip().replace('\xa0', ' ') for title in bibtex_titles]
+    return titles
+
 def open_file():
     root = tk.Tk()
     root.withdraw()
@@ -31,6 +36,8 @@ def open_file():
             contenido = file.read()
             authors = extraer_autores(contenido)
             print(authors)
+            title=extraer_titulo(contenido)
+            print(title)
 
 if __name__ == "__main__":
     open_file()
