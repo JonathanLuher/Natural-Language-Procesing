@@ -13,6 +13,7 @@ def procesar_nombres(texto):
             nombres_reordenados.append(name)
     return ", ".join(nombres_reordenados)
 
+#Funcion para extraer nombres
 def extraer_nombres(expresion, contenido):
     resultados = re.findall(expresion, contenido, re.IGNORECASE)
     return [procesar_nombres(resultado) for resultado in resultados]
@@ -27,11 +28,21 @@ def extraer_datos_bibtext(contenido):
 
     bibtex_booktitle = re.findall(r'booktitle\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
     bibtex_año = re.findall(r'year\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
+    bibtext_month = re.findall(r'month\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
+    bibtext_day = re.findall(r'day\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
     bibtex_publisher = re.findall(r'publisher\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
     bibtex_address = re.findall(r'address\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
     bibtext_pages = re.findall(r'pages\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
     bibtext_abstract = re.findall(r'abstract\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
     bibtext_isbn = re.findall(r'isbn\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
 
-    datos=[bibtex_autores,bibtex_editores,titles,bibtex_booktitle,bibtex_año,bibtex_publisher,bibtex_address,bibtext_pages,bibtext_abstract,bibtext_isbn]
+    bibtex_journal = re.findall(r'journal\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
+    bibtext_issn = re.findall(r'issn\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
+    bibtext_doi = re.findall(r'doi\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
+    bibtext_url = re.findall(r'url\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
+
+
+
+
+    datos=[bibtex_autores,bibtex_editores,titles,bibtex_booktitle,bibtex_año,bibtext_month,bibtext_day,bibtex_publisher,bibtex_address,bibtext_pages,bibtext_abstract,bibtext_isbn,bibtex_journal,bibtext_issn,bibtext_doi,bibtext_url]
     return datos
