@@ -3,6 +3,10 @@ import tkinter as tk
 from tkinter import filedialog
 import GetData_bibtext
 import GetData_ristext 
+import convertToRis
+
+
+f = open("myfile.ris", "x")
 
 data = [
     "Autores: ", "Editores: ", "Titulo: ", "Libro: ", "Año de publicacion: ", 
@@ -29,6 +33,10 @@ def open_file():
             # Verifica la extensión del archivo y llama a la función correspondiente
             if file_extension.lower() == ".bib":
                 datos = GetData_bibtext.extraer_datos_bibtext(contenido)
+                ris_converted = convertToRis.convertir_a_ris(datos)
+                f.write(ris_converted)
+                f.close
+
 
             elif file_extension.lower() == ".ris":
                 datos = GetData_ristext.extraer_datos_ris(contenido)
