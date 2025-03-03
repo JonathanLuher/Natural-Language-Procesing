@@ -47,7 +47,7 @@ def extraer_datos_bibtext(contenido):
     bibtext_issn = re.findall(patrones_bibtex['ISSN'], contenido, re.IGNORECASE)
     bibtext_doi = re.findall(patrones_bibtex['DOI'], contenido, re.IGNORECASE)
     bibtext_url = re.findall(patrones_bibtex['URL'], contenido, re.IGNORECASE)
-
+    
     datos=[bibtex_autores,bibtex_editores,titles,bibtex_booktitle,bibtex_año,bibtext_month,bibtext_day,bibtex_publisher,bibtex_address,bibtext_pages,bibtext_abstract,bibtext_isbn,bibtex_journal,bibtext_issn,bibtext_doi,bibtext_url]
     return datos
 

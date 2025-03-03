@@ -3,7 +3,11 @@ def convertir_a_ris(datos_bibtex):
     ris_referencia = []
     
     #Obtenemos los datos del bibtext
-    ris_referencia.append("TY  - JOUR") 
+    if datos_bibtex[11]:
+        ris_referencia.append("TY  - CONF")
+    elif datos_bibtex[13]:
+        ris_referencia.append("TY  - JOUR") 
+ 
     if datos_bibtex[0]:
         for autor in datos_bibtex[0]:
             ris_referencia.append(f"AU  - {autor}")

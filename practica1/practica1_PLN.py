@@ -5,7 +5,6 @@ import GetData_bibtext
 import GetData_ristext 
 import convertToRis
 
-
 f = open("myfile.ris", "x")
 
 data = [
@@ -25,7 +24,7 @@ def open_file():
     )
     
     if file_path:
-        _, file_extension = os.path.splitext(file_path)  # Obtiene la extensión del archivo
+        _, file_extension = os.path.splitext(file_path)
 
         with open(file_path, "r", encoding="utf-8") as file:
             contenido = file.read()
