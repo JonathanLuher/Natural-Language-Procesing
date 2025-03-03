@@ -1,0 +1,18 @@
+{
+    "Autores": "author\\s*=\\s*[{]([\\s\\S]*?)[}](?=,|\\n)",
+    "Editores": "editor\\s*=\\s*[{]([\\s\\S]*?)\\s*}(?=,|\\n)",
+    "Titulo": "(?<!book)title\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Libro": "booktitle\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Año de publicacion": "year\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Mes de publicacion": "month\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Dia de publicacion": "day\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Editorial": "publisher\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Direccion": "address\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Paginas": "pages\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Abstract": "abstract\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "ISBN": "isbn\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "Journal": "journal\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "ISSN": "issn\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "DOI": "doi\\s*=\\s*[{]([\\s\\S]*?)[}]",
+    "URL": "url\\s*=\\s*[{]([\\s\\S]*?)[}]"
+}

@@ -1,4 +1,9 @@
 import re
+import json
+
+def cargar_patrones_json():
+    with open("patrones_bibtex.json", "r", encoding="utf-8") as json_file:
+        return json.load(json_file)
 
 #funciones para formatear y reordenar listas de nombres
 def procesar_nombres(texto):
@@ -20,29 +25,28 @@ def extraer_nombres(expresion, contenido):
 
 #Funcion que busca la lista de autores y editores
 def extraer_datos_bibtext(contenido):
-    bibtex_autores = extraer_nombres(r'author\s*=\s*[{]([\s\S]*?)[}](?=,|\n)', contenido)
-    bibtex_editores = extraer_nombres(r'editor\s*=\s*[{]([\s\S]*?)\s*}(?=,|\n)', contenido)
+    patrones_bibtex = cargar_patrones_json()  # Cargar los patrones desde el archivo JSON
 
-    bibtex_titles = re.findall(r'(?<!book)title\s*=\s*[{]([\s\S]*?)[}]', contenido, re.IGNORECASE)
+    bibtex_autores = extraer_nombres(patrones_bibtex['Autores'], contenido)
+    bibtex_editores = extraer_nombres(patrones_bibtex['Editores'], contenido)
+
+    bibtex_titles = re.findall(patrones_bibtex['Titulo'], contenido, re.IGNORECASE)
     titles = [re.sub(r'\n+', ' ', title).strip().replace('\xa0', ' ') for title in bibtex_titles]
 
-    bibtex_booktitle = re.findall(r'booktitle\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtex_año = re.findall(r'year\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtext_month = re.findall(r'month\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtext_day = re.findall(r'day\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtex_publisher = re.findall(r'publisher\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtex_address = re.findall(r'address\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtext_pages = re.findall(r'pages\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtext_abstract = re.findall(r'abstract\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
-    bibtext_isbn = re.findall(r'isbn\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
+    bibtex_booktitle = re.findall(patrones_bibtex['Libro'], contenido, re.IGNORECASE)
+    bibtex_año = re.findall(patrones_bibtex['Año de publicacion'], contenido, re.IGNORECASE)
+    bibtext_month = re.findall(patrones_bibtex['Mes de publicacion'], contenido, re.IGNORECASE)
+    bibtext_day = re.findall(patrones_bibtex['Dia de publicacion'], contenido, re.IGNORECASE)
+    bibtex_publisher = re.findall(patrones_bibtex['Editorial'], contenido, re.IGNORECASE)
+    bibtex_address = re.findall(patrones_bibtex['Direccion'], contenido, re.IGNORECASE)
+    bibtext_pages = re.findall(patrones_bibtex['Paginas'], contenido, re.IGNORECASE)
+    bibtext_abstract = re.findall(patrones_bibtex['Abstract'], contenido, re.IGNORECASE)
+    bibtext_isbn = re.findall(patrones_bibtex['ISBN'], contenido, re.IGNORECASE)
 
-    bibtex_journal = re.findall(r'journal\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
-    bibtext_issn = re.findall(r'issn\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-    bibtext_doi = re.findall(r'doi\s*=\s*[{]([\s\S]*?)[}]',contenido,re.IGNORECASE)
-    bibtext_url = re.findall(r'url\s*=\s*[{]([\s\S]*?)[}]',contenido, re.IGNORECASE)
-
-
-
+    bibtex_journal = re.findall(patrones_bibtex['Journal'], contenido, re.IGNORECASE)
+    bibtext_issn = re.findall(patrones_bibtex['ISSN'], contenido, re.IGNORECASE)
+    bibtext_doi = re.findall(patrones_bibtex['DOI'], contenido, re.IGNORECASE)
+    bibtext_url = re.findall(patrones_bibtex['URL'], contenido, re.IGNORECASE)
 
     datos=[bibtex_autores,bibtex_editores,titles,bibtex_booktitle,bibtex_año,bibtext_month,bibtext_day,bibtex_publisher,bibtex_address,bibtext_pages,bibtext_abstract,bibtext_isbn,bibtex_journal,bibtext_issn,bibtext_doi,bibtext_url]
     return datos
